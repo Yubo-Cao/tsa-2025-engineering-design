@@ -1,0 +1,6 @@
+firebase-functions
+firebase-admin
+Pillow
+onnxruntime>=1.16.0
+tensorflow
+numpy

@@ -43,3 +43,10 @@ next-env.d.ts
 # models
 deep-learning/output/
 deep-learning/final/
+
+# python
+venv/
+*.egg-info/
+__pycache__/
+*.pyc
+certificates
