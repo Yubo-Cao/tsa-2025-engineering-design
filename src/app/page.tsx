@@ -51,18 +51,18 @@ function a11yProps(index: number) {
 
 const CropTabs: React.FC = () => {
   const [value, setValue] = useState(0);
-  const [imageBase64, setImageBase64] = useState<string | null>(null);
-  const [prediction, setPrediction] = useState<string | null>(null);
+  const [imageBase64, setImageBase64] = useState<string | undefined>(undefined);
+  const [prediction, setPrediction] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | undefined>(undefined);
   const [currentCropType, setCurrentCropType] = useState<string>("rice"); // Default to rice
 
   const handleTabChange = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
       setValue(newValue);
-      setPrediction(null); // Clear prediction on tab change
-      setError(null);
-      setImageBase64(null);
+      setPrediction(undefined); // Clear prediction on tab change
+      setError(undefined);
+      setImageBase64(undefined);
       if (newValue === 0) setCurrentCropType("rice");
       else if (newValue === 1) setCurrentCropType("melon");
       else if (newValue === 2) setCurrentCropType("cucumber");
@@ -83,8 +83,8 @@ const CropTabs: React.FC = () => {
     }
 
     setLoading(true);
-    setError(null);
-    setPrediction(null);
+    setError(undefined);
+    setPrediction(undefined);
 
     let functionName = "";
     if (currentCropType === "rice") functionName = "classify_rice";
@@ -102,11 +102,15 @@ const CropTabs: React.FC = () => {
         image: imageBase64,
       });
       setPrediction(response.data.prediction);
-      setError(null);
-    } catch (e: any) {
+      setError(undefined);
+    } catch (e: unknown) {
       console.error("Error classifying image:", e);
-      setError(e.response?.data || "Error classifying image.");
-      setPrediction(null);
+      if (axios.isAxiosError(e)) {
+        setError(e.response?.data || "Error classifying image.");
+      } else {
+        setError("Error classifying image.");
+      }
+      setPrediction(undefined);
     } finally {
       setLoading(false);
     }
