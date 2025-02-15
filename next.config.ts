@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== "development",
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "20mb",
+    },
+  },
+  api: {
+    responseLimit: "20mb",
+  },
   async headers() {
     return [
       {
