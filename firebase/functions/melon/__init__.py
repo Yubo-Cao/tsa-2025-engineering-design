@@ -1,6 +1,6 @@
 import base64
-from io import BytesIO
 import json
+from io import BytesIO
 
 import numpy as np
 import tensorflow as tf

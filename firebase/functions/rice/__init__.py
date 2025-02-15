@@ -1,11 +1,12 @@
 import base64
-from firebase_functions import https_fn
-from io import BytesIO
-from PIL import Image
-import numpy as np
-import tensorflow.lite as tflite
-import tensorflow as tf
 import json
+from io import BytesIO
+
+import numpy as np
+import tensorflow as tf
+import tensorflow.lite as tflite
+from firebase_functions import https_fn
+from PIL import Image
 
 # Initialize TFLite interpreter
 _MODEL_PATH = "rice/rice.tflite"
