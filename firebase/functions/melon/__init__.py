@@ -1,5 +1,6 @@
 import base64
 from io import BytesIO
+import json
 
 import numpy as np
 import tensorflow as tf
@@ -53,7 +54,9 @@ def classify_melon(req: https_fn.Request) -> https_fn.Response:
         prediction = infer_tflite_melon(image)
 
         return https_fn.Response(
-            {"prediction": prediction}, status=200, content_type="application/json"
+            json.dumps({"prediction": prediction}),
+            status=200,
+            content_type="application/json",
         )
 
     except Exception as e:

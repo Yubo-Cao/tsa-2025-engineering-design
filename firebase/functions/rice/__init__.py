@@ -5,7 +5,7 @@ from PIL import Image
 import numpy as np
 import tensorflow.lite as tflite
 import tensorflow as tf
-
+import json
 
 # Initialize TFLite interpreter
 _MODEL_PATH = "rice/rice.tflite"
@@ -53,7 +53,9 @@ def classify_rice(req: https_fn.Request) -> https_fn.Response:
         prediction = infer_tflite_rice(image)
 
         return https_fn.Response(
-            {"prediction": prediction}, status=200, content_type="application/json"
+            json.dumps({"prediction": prediction}),
+            status=200,
+            content_type="application/json",
         )
 
     except Exception as e:

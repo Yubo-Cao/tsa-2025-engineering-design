@@ -1,4 +1,5 @@
 import base64
+import json
 from firebase_functions import https_fn
 from io import BytesIO
 from PIL import Image
@@ -53,7 +54,9 @@ def classify_cucumber(req: https_fn.Request) -> https_fn.Response:
         prediction = infer_tflite_cucumber(image)
 
         return https_fn.Response(
-            {"prediction": prediction}, status=200, content_type="application/json"
+            json.dump({"prediction": prediction}),
+            status=200,
+            content_type="application/json",
         )
 
     except Exception as e:
